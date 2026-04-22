@@ -1,26 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
     // Auto update copyright year
-    const yearElements = document.querySelectorAll('#year, .year');
+    const yearElements = document.querySelectorAll('#year');
     const currentYear = new Date().getFullYear();
     yearElements.forEach(el => el.textContent = currentYear);
 
-    // Hide Header on scroll down, show on scroll up
-    let lastScrollY = window.scrollY;
+    // Header styling on scroll
     const header = document.getElementById('header');
-
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 80) { // Add blur backing or styling here if you prefer
-            if (lastScrollY < window.scrollY) {
-                header.classList.add('scroll-down');
-            } else {
-                header.classList.remove('scroll-down');
-            }
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
         }
-        lastScrollY = window.scrollY;
     });
 
-    // Intersection Observer for fade-in animations on scroll
+    // Intersection Observer for fade-up animations on scroll
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -31,12 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optional: Stop observing once faded in
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    const fadeElements = document.querySelectorAll('.fade-in');
+    const fadeElements = document.querySelectorAll('.fade-up');
     fadeElements.forEach(el => observer.observe(el));
 });
